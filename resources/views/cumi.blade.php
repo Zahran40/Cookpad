@@ -75,7 +75,7 @@
                         <img src="https://img-global.cpcdn.com/recipes/4f341e097afa154c/130x160f0.5_0.5_1.0q50/opor-ayam-pejantan-foto-resep-utama.webp"
                             class="img-fluid" style="max-width: 150px; object-fit: cover;" alt="Opor Ayam Pejantan">
                         <div class="card-body">
-                            <a href="../Resep/resep.html" class="card-text"
+                            <a href="{{ route('resep') }}" class="card-text"
                                 style="color: inherit; text-decoration: none;">Ayam kecap</a>
                             <p class="card-texts">ayam pejantan • air jeruk nipis • minyak goreng • air • santan murni •
                                 bawang merah • bawang putih • jempol kunyit • ketumbar • merica • kemiri • jempol jahe
