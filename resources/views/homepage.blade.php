@@ -41,7 +41,7 @@
         </a>
         <a href="#cari">🔎 Cari</a>
         <a href="#kategori">Kategori</a>
-        <a href="{{ route('resep') }}">Resepmu</a>
+        <a href="{{ route('myresep') }}">Resepmu</a>
         <a href="{{ route('koleksi') }}">Koleksi</a>
     </div>
 

@@ -35,7 +35,7 @@
   </a>
   <a href="{{ route('homepage') }}#cari">🔎 Cari</a>
   <a href="{{ route('homepage') }}#kategori">Kategori</a>
-  <a href="{{ route('resep') }}">Resepmu</a>
+  <a href="{{ route('myresep') }}">Resepmu</a>
   <a href="{{ route('koleksi') }}">Koleksi</a>
 </div>
 <!-- Tombol untuk membuka sidebar -->
