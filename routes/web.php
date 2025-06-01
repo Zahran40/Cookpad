@@ -8,6 +8,7 @@ Route::get('/', function () {
 })->name('homepage');
 
 
+Route::get('/sign-up', [PageController::class, 'signup'])->name('signup');
 Route::get('/resep', [PageController::class, 'resep'])->name('resep');
 Route::get('/myresep', [PageController::class, 'myresep'])->name('myresep');
 Route::get('/profile', [PageController::class, 'profile'])->name('profile');

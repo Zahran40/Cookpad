@@ -13,6 +13,11 @@ class PageController extends Controller
         return view('homepage');
     }
 
+    public function signup()
+    {
+        return view('sign-up');
+    }
+
     public function resep()
     {
         return view('resep');
