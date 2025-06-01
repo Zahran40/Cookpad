@@ -23,7 +23,7 @@
 
         </div>
         <div>
-            <a href="{{ route('signup') }}">
+            <a href="{{ route('login') }}">
                 <button class="btn btn-outline-secondary me-3"
                     style="font-size: 25px; font-weight: 500; font-family: Montserrat;">Masuk</button>
             </a>

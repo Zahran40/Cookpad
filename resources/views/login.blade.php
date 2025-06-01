@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Daftar Cookpad</title>
+    <title>Masuk Cookpad</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -11,7 +11,8 @@
             font-family: 'Montserrat', Arial, sans-serif;
         }
 
-        .signup-container {
+        .login-container {
+            /* Ganti nama kelas dari signup-container menjadi login-container */
             max-width: 370px;
             margin: 40px auto;
             background: #fff;
@@ -21,47 +22,40 @@
             text-align: center;
         }
 
-        .signup-header {
+        .login-header {
+            /* Ganti nama kelas dari signup-header menjadi login-header */
             margin-bottom: 18px;
         }
 
-        .signup-header img {
+        .login-header img {
             width: 110px;
             margin-bottom: 8px;
         }
 
-        .signup-header .logo-text {
+        .login-header .logo-text {
             font-size: 32px;
             font-weight: 700;
             color: #6b2d00;
             margin-bottom: 0;
         }
 
-        .signup-header .country {
-            color: #4b4b4b;
-            font-size: 15px;
-            font-weight: 600;
-            text-decoration: underline;
-            cursor: pointer;
-            margin-bottom: 10px;
-            display: inline-block;
-        }
-
-        .signup-title {
+        .login-title {
+            /* Ganti nama kelas dari signup-title menjadi login-title */
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 18px;
             color: #222;
         }
 
-        .signup-form {
+        .login-form {
+            /* Ganti nama kelas dari signup-form menjadi login-form */
             display: flex;
             flex-direction: column;
             gap: 14px;
             margin-bottom: 18px;
         }
 
-        .signup-form input {
+        .login-form input {
             padding: 12px 14px;
             border: 1.5px solid #e0e0e0;
             border-radius: 8px;
@@ -71,11 +65,12 @@
             transition: border 0.2s;
         }
 
-        .signup-form input:focus {
+        .login-form input:focus {
             border-color: #ff9800;
         }
 
-        .signup-btn {
+        .login-btn {
+            /* Ganti nama kelas dari signup-btn menjadi login-btn */
             background: #ff9800;
             color: #fff;
             border: none;
@@ -88,17 +83,18 @@
             transition: background 0.2s;
         }
 
-        .signup-btn:hover {
+        .login-btn:hover {
             background: #e68900;
         }
 
-        .signup-footer {
+        .login-footer {
+            /* Ganti nama kelas dari signup-footer menjadi login-footer */
             font-size: 12px;
             color: #888;
             margin-top: 18px;
         }
 
-        .signup-footer a {
+        .login-footer a {
             color: #888;
             text-decoration: underline;
         }
@@ -136,27 +132,25 @@
 </head>
 
 <body>
-    <div class="signup-container">
+    <div class="login-container">
         <button class="close-btn" onclick="window.location.href='{{ url('/') }}'">&times;</button>
-        <div class="signup-header">
+        <div class="login-header">
             <br>
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Cookpad_logo.svg/768px-Cookpad_logo.svg.png"
                 alt="Cookpad Logo">
             <div class="logo-text" style="color:#6b2d00;font-family:Montserrat;font-weight:700;">cookpad</div>
         </div>
-        <div class="signup-title">Daftar atau Masuk</div>
-        <form class="signup-form" method="POST" action="#">
+        <div class="login-title">Masuk ke Akun Anda</div>
+        <form class="login-form" method="POST" action="#">
             @csrf
-            <input type="text" name="name" placeholder="Nama" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <div class="register-link">
-                Sudah punya akun? <a href="{{ route('login') }}">Login</a> </div>
-            <div class="login-footer"></div>
-            <button type="submit" class="signup-btn">Daftar</button>
+            <input type="text" name="name" placeholder="Nama Pengguna" required> <input type="password" name="password"
+                placeholder="Password" required>
+            <button type="submit" class="login-btn">Masuk</button>
         </form>
-        <div class="signup-footer">
-            Dengan menggunakan Cookpad, kamu menyetujui <a href="#">Ketentuan Pemakaian</a> &amp; <a href="#">Kebijakan
+        <div class="register-link">
+            Belum punya akun? <a href="{{ route('signup') }}">Daftar sekarang</a> </div>
+        <div class="login-footer">
+            Dengan masuk ke Cookpad, kamu menyetujui <a href="#">Ketentuan Pemakaian</a> &amp; <a href="#">Kebijakan
                 Privasi</a> kami
         </div>
     </div>

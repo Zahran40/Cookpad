@@ -21,8 +21,10 @@
 
         </div>
         <div>
-            <button class="btn btn-outline-secondary me-3"
-                style="font-size: 25px; font-weight: 500; font-family: Montserrat;">Masuk</button>
+            <a href="{{ route('login') }}">
+                <button class="btn btn-outline-secondary me-3"
+                    style="font-size: 25px; font-weight: 500; font-family: Montserrat;">Masuk</button>
+            </a>
             <button class="btn-oren"><img src="https://cdn-icons-png.flaticon.com/512/1024/1024824.png" alt=""
                     style="width: 35px; margin-right: 10px;">Tulis</button>
         </div>
