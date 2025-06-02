@@ -16,98 +16,45 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-light bg-white border-bottom px-4 py-2">
-        <div class="d-flex align-items-center">
-
-        </div>
-        <div>
-            <a href="{{ route('login') }}">
-                <button class="btn btn-outline-secondary me-3"
-                    style="font-size: 25px; font-weight: 500; font-family: Montserrat;">Masuk</button>
-            </a>
-            <button class="btn-oren"><img src="https://cdn-icons-png.flaticon.com/512/1024/1024824.png" alt=""
-                    style="width: 35px; margin-right: 10px;">Tulis</button>
-        </div>
-    </nav>
+    @include('Navbar.navbar')
 
     <!-- Sidebar -->
-    <div class="sidebar" id="mySidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
-            style="font-family: Montserrat;font-size: 30px;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Cookpad_logo.svg/2560px-Cookpad_logo.svg.png"
-                alt="" style="width: 140px;">
-            <img src="https://static.thenounproject.com/png/943458-200.png" alt="" style="width: 35px;"
-                class="hover-image">
-        </a>
-        <a href="{{ route('homepage') }}#cari">🔎 Cari</a>
-        <a href="{{ route('homepage') }}#kategori">Kategori</a>
-        <a href="{{ route('myresep') }}">Resepmu</a>
-        <a href="{{ route('koleksi') }}">Koleksi</a>
-    </div>
-    <!-- Tombol untuk membuka sidebar -->
-    <span class="open-btn" onclick="openNav()">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Cookpad_logo.svg/2560px-Cookpad_logo.svg.png"
-            alt="" style="width: 120px;">
-        <img src="https://cdn0.iconfinder.com/data/icons/large-black-icons/512/Shift_navigator_stock_up_right.png"
-            style="width: 25x; margin-left: 15px;" alt="" class="hover-image">
-    </span>
+    @include('Navbar.sidebar')
 
-    <div class="container mt-5 mb-5">
-        <div class="container my-4">
-            <div class="d-flex align-items-center gap-3">
-                <img src="https://img-global.cpcdn.com/users/b0ba1b7293a3bb0e/108x108cq50/avatar.webp" alt="Avatar"
-                    class="rounded-circle" width="108" height="108">
-                <div>
-                    <h1 class="h4 mb-1">Rika Erviana</h1>
-                </div>
-            </div>
+   {{-- filepath: c:\laragon\www\Cookpad\resources\views\profile.blade.php --}}
+<div class="container my-4">
+    <div class="d-flex align-items-center gap-3">
+        <img src="{{ $user->foto_profile ?? 'https://ui-avatars.com/api/?name='.urlencode($user->nama) }}"
+            alt="Avatar" class="rounded-circle" width="108" height="108">
+        <div>
+            <h1 class="h4 mb-1">{{ $user->nama }}</h1>
+            <p class="mb-0">{{ $user->email }}</p>
         </div>
+    </div>
+</div>
 
-
-
-        <div class="container my-4 mt-5">
-            <h3>Resep (1719)</h3>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="https://img-global.cpcdn.com/recipes/4f341e097afa154c/130x160f0.5_0.5_1.0q50/opor-ayam-pejantan-foto-resep-utama.webp"
-                            class="card-img-top" alt="Kue Kaswi Pandan">
-                        <div class="card-body">
-                            <h5 class="card-title">Kue Kaswi Pandan</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="https://img-global.cpcdn.com/recipes/4f341e097afa154c/130x160f0.5_0.5_1.0q50/opor-ayam-pejantan-foto-resep-utama.webp"
-                            class="card-img-top" alt="Ayam Goreng Krispi Ala KFC">
-                        <div class="card-body">
-                            <h5 class="card-title">Ayam Goreng Krispi Ala KFC</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="https://img-global.cpcdn.com/recipes/4f341e097afa154c/130x160f0.5_0.5_1.0q50/opor-ayam-pejantan-foto-resep-utama.webp"
-                            class="card-img-top" alt="Bolu Kukus Susu Kopi">
-                        <div class="card-body">
-                            <h5 class="card-title">Bolu Kukus Susu Kopi</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="https://img-global.cpcdn.com/recipes/4f341e097afa154c/130x160f0.5_0.5_1.0q50/opor-ayam-pejantan-foto-resep-utama.webp"
-                            class="card-img-top" alt="Cream Soup Ala CKF">
-                        <div class="card-body">
-                            <h5 class="card-title">Cream Soup Ala CKF</h5>
-                            <p>❤️ 10 | 🔥 30</p>
-                        </div>
+<div class="container my-4 mt-5">
+    <h3>Resep ({{ $reseps->count() }})</h3>
+    <div class="row">
+        @forelse($reseps as $resep)
+            <div class="col-md-3">
+                <div class="card">
+                    <a href="{{ route('resep.show', $resep->id) }}">
+                        <img src="{{ $resep->gambar_resep ?? 'https://via.placeholder.com/130x160?text=No+Image' }}"
+                            class="card-img-top" alt="{{ $resep->nama_resep }}">
+                    </a>
+                    <div class="card-body">
+                        <a href="{{ route('resep.show', $resep->id) }}" style="text-decoration:none;color:inherit;">
+                            <h5 class="card-title">{{ $resep->nama_resep }}</h5>
+                        </a>
                     </div>
                 </div>
             </div>
-        </div>
+        @empty
+            <p class="text-muted">Belum ada resep.</p>
+        @endforelse
     </div>
+</div>
 
     <div class="container my-4 mt-5">
         <div class="d-flex mt-2">

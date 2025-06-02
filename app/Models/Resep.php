@@ -26,4 +26,10 @@ class Resep extends Model
     return $this->belongsTo(Kategori::class, 'kategori_id');
 }
 
+public function user()
+{
+    // Satu resep belongs to satu user (many-to-one relationship)
+    return $this->belongsTo(User::class, 'id_pembuat');
+}
+
 }

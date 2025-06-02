@@ -145,13 +145,13 @@
             <div class="logo-text" style="color:#6b2d00;font-family:Montserrat;font-weight:700;">cookpad</div>
         </div>
         <div class="signup-title">Daftar atau Masuk</div>
-        <form class="signup-form" method="POST" action="#">
+        <form class="signup-form" method="POST" action="{{ route('register') }}">
             @csrf
             <input type="text" name="name" placeholder="Nama" required>
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
             <div class="register-link">
-                Sudah punya akun? <a href="{{ route('login') }}">Login</a> </div>
+                Sudah punya akun? <a href="{{ route('showlogin') }}">Login</a> </div>
             <div class="login-footer"></div>
             <button type="submit" class="signup-btn">Daftar</button>
         </form>
