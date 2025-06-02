@@ -68,62 +68,31 @@
                 </div>
             </div>
             <div>
-                <h4 class="mt-4">Resep Udang <span class="text-muted">(101)</span></h4>
+                <h4 class="mt-4">Resep Udang <span class="text-muted">(90)</span></h4>
             </div>
         </div>
 
+
+        @foreach ($reseps as $resep )
 
         <div class="row">
             <div class="col-12 mb-4">
                 <div class="card">
                     <div class="d-flex">
-                        <img src="https://img-global.cpcdn.com/recipes/4f341e097afa154c/130x160f0.5_0.5_1.0q50/opor-ayam-pejantan-foto-resep-utama.webp"
-                            class="img-fluid" style="max-width: 150px; object-fit: cover;" alt="Opor Ayam Pejantan">
+                        <img src="{{ $resep->gambar_resep }}"
+                            class="img-fluid" style="max-width: 150px; object-fit: cover;" alt="{{ $resep->nama_resep }}">
                         <div class="card-body">
-                            <a href="{{ route('resep') }}" class="card-text"
-                                style="color: inherit; text-decoration: none;">Ayam kecap</a>
-                            <p class="card-texts">ayam pejantan • air jeruk nipis • minyak goreng • air • santan murni •
-                                bawang merah • bawang putih • jempol kunyit • ketumbar • merica • kemiri • jempol jahe
+                            <a href="{{ route('resep.show',$resep->id) }}" class="card-text"
+                                style="color: inherit; text-decoration: none;">{{$resep->nama_resep}}</a>
+                            <p class="card-texts">{{ $resep->bahan }}</p>
                             </p>
-                            <p class="text-muted">Wenny Yudi, S.Psi, MM.</p>
+                            <p class="text-muted">{{$resep->waktu_pembuatan}}</p>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-12 mb-4">
-                <div class="card">
-                    <div class="d-flex">
-                        <img src="https://img-global.cpcdn.com/recipes/4c3542fb420b32d2/130x160f0.5_0.562115_1.0q50/ayam-woku-foto-resep-utama.webp"
-                            class="img-fluid" style="max-width: 150px; object-fit: cover;" alt="Ayam Woku">
-                        <div class="card-body">
-                            <a href="../Resep/resep.html" class="card-text"
-                                style="color: inherit; text-decoration: none;">Ayam Woku</a>
-                            <p class="card-texts">ayam • Bahan: daun bawang, potong 2 • daun kemangi (me: suka yg banyak
-                                krn makin wangi nantinya) • Bumbu halus: bawang merah • bawang putih • cabai merah
-                                keriting ...</p>
-                            <p class="text-muted">Moona's Kitchen</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 mb-4">
-                <div class="card">
-                    <div class="d-flex">
-                        <img src="https://img-global.cpcdn.com/recipes/0bb5a96e36739e2a/130x160f0.5_0.413471_1.0q50/ayam-bakar-kecap-foto-resep-utama.webp"
-                            class="img-fluid" style="max-width: 150px; object-fit: cover;" alt="Ayam Bakar Kecap">
-                        <div class="card-body">
-                            <a href="../Resep/resep.html" class="card-text"
-                                style="color: inherit; text-decoration: none;">Ayam bakar taliwang</a>
-                            <p class="card-texts">ayam, potong 10 • Gula Aren • Kecap Manis • Gula, Garam, Penyedap Rasa
-                                • air • Bawang Merah • bawang putih • kemiri • kunyit • jahe • serai • daun salam</p>
-                            <p class="text-muted">Umma Kalila</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            
+            @endforeach
 
         <div class="container my-4 mt-5">
             <div class="d-flex mt-2">

@@ -53,78 +53,77 @@
         <img src="https://cdn0.iconfinder.com/data/icons/large-black-icons/512/Shift_navigator_stock_up_right.png"
             style="width: 25x; margin-left: 15px;" alt="" class="hover-image">
     </span>
-
+    
     <div class="container mt-5">
         <div class="row">
+                
             <div class="col-md-2">
-                <img src="https://img-global.cpcdn.com/recipes/4f341e097afa154c/130x160f0.5_0.5_1.0q50/opor-ayam-pejantan-foto-resep-utama.webp"
-                    alt="Opor Ayam" class="recipe-image" style=" width: 320px; margin-left: 30px;">
+                <img src="{{$resep->gambar_resep}}"
+                alt="{{$resep->nama_resep}}" class="recipe-image" style=" width: 320px; margin-left: 30px;">
             </div>
             <div class="col-md-6">
                 <div class="mt-5" style="margin-left: 180px;">
-
-                    <h2>Opor Ayam Pejantan</h2>
-                    <p><strong>Desc resep</strong></p>
-                    <p>Durasi masak 30 menit</p>
+                    
+                    <h2>{{ $resep->nama_resep }}</h2>
+                    <p><strong>{{ $resep->deskripsi }}</strong></p>
+                    <p>{{$resep->waktu_membuat}}</p>
                 </div>
                 <button class="btn btn-outline-warning" style="margin-left: 180px;">
                     <img src="https://cdn-icons-png.flaticon.com/512/6365/6365625.png" alt=""
-                        style="width: 30px; margin-right: 5px;">
+                    style="width: 30px; margin-right: 5px;">
                     Simpan Resep
                 </button>
-
+                
             </div>
         </div>
-
+        
         <div class="row mt-4" style="margin-left: 25px;">
             <!-- Kolom kiri: Bahan-bahan -->
             <div class="col-md-6">
                 <h3 class="mb-3">Bahan-bahan</h3>
                 <ul>
-                    <li>1 ekor ayam pejantan</li>
-                    <li>2 sdm air jeruk nipis</li>
-                    <li>4 sdm minyak goreng</li>
-                    <li>400 ml air</li>
-                    <li>100 ml santan murni</li>
+                    @foreach (explode("\n", $resep->bahan) as $bahan )
+                        
+                    <li>{{$bahan}}</li>
+                    @endforeach
                 </ul>
             </div>
             <!-- Kolom kanan: Cara Membuat -->
             <div class="col-md-6">
                 <h3 class="mb-4">Cara Membuat</h3>
                 <ol>
-                    <li>Cuci bersih ayam yang sudah dipotong lalu lumuri air jeruk nipis. Diamkan 5 menit. Bilas bersih.
-                    </li>
-                    <li>Tumis bumbu halus sampai wangi, masukkan daun salam, daun jeruk, sereh, dan lengkuas. Masak
-                        sampai tanak.</li>
-                    <li>Masukkan ayam. Aduk rata lalu tutup selama 10 menit, tuang air. Masak selama 15 menit.</li>
-                </ol>
-            </div>
+                    @foreach (explode("\n", $resep->langkah) as $langkah )  
+                    <li>{{$langkah}}</li>
+                    @endforeach
+                </li>
+            </ol>
         </div>
     </div>
+</div>
 
-    <div class="container comment-box">
-        <h2 class="mt-5">Ditulis Oleh</h2>
-        <div class="d-flex align-items-center mt-4">
-
-            <img src="https://img-global.cpcdn.com/users/f1c058aed77568f4/196x196cq50/avatar.webp" alt="Avatar"
+<div class="container comment-box">
+    <h2 class="mt-5">Ditulis Oleh</h2>
+            <div class="d-flex align-items-center mt-4">
+                
+                <img src="https://img-global.cpcdn.com/users/f1c058aed77568f4/196x196cq50/avatar.webp" alt="Avatar"
                 class="rounded-circle mb-4" style="width: 120px; height: auto; margin-right: 15px;">
-            <div class="ml-3">
-                <h4>Wenny Yudi, S.Psi, MM.</h4>
-                <h6>TIMESTAMP DD/MM/YYYY</h6>
+                <div class="ml-3">
+                    <h4>{{$resep->nama_pembuat}}</h4>
+                    {{-- <h6>{{$resep->created_at->format('d/m/')}}</h6> --}}
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="container my-4 mt-5">
-        <div class="d-flex mt-2">
-            <h5>Tentang Kami</h5>
-        </div>
-        <p style="font-size: 20px;">
-            Cookpad adalah platform yang memungkinkan pengguna untuk berbagi dan menemukan resep masakan dari seluruh
-            dunia. Dengan fokus pada komunitas, Cookpad menyediakan ruang bagi para koki rumahan untuk berinteraksi,
-            berbagi pengalaman, dan menemukan inspirasi masakan baru.
-            Misi kami di Cookpad adalah untuk membuat masak sehari-hari makin menyenangkan, karena kami percaya bahwa
-            memasak adalah
+        
+        <div class="container my-4 mt-5">
+            <div class="d-flex mt-2">
+                <h5>Tentang Kami</h5>
+            </div>
+            <p style="font-size: 20px;">
+                Cookpad adalah platform yang memungkinkan pengguna untuk berbagi dan menemukan resep masakan dari seluruh
+                dunia. Dengan fokus pada komunitas, Cookpad menyediakan ruang bagi para koki rumahan untuk berinteraksi,
+                berbagi pengalaman, dan menemukan inspirasi masakan baru.
+                Misi kami di Cookpad adalah untuk membuat masak sehari-hari makin menyenangkan, karena kami percaya bahwa
+                memasak adalah
             kunci menuju kehidupan yang lebih bahagia dan lebih sehat bagi manusia, komunitas, dan bumi.
             Kami mendukung koki rumahan di seluruh dunia untuk membantu satu sama lain dengan
             berbagi resep dan pengalaman memasak.

@@ -230,6 +230,7 @@
 </head>
 
 <body>
+    <form id="upload-form" action=" {{route ('resep.store')}}" method="POST" enctype="multipart/form-data">
     <div class="container">
         <div class="header">
             <button class="btn btn-delete">
@@ -240,42 +241,59 @@
         </div>
         <div class="main-content">
             <div class="photo-section">
+            @csrf
+            <label for="gambar_resep" style="cursor:pointer;">
                 <div class="icon">📷</div>
                 <div class="desc">[Opsional] Foto Resep</div>
                 <div class="subdesc">Tambahkan foto akhir masakan</div>
+            </label>
+            <input type="file" id="gambar_resep" name="gambar_resep" accept="image/*" style="display:none;" onchange="previewImage(event)">
+            <img id="preview" src="#" alt="Preview" style="display:none; max-width: 180px; margin-top: 10px; border-radius:8px;">
+        </div>
+        <div class="form-section">
+            <input class="title-input" type="text" name="nama_resep" placeholder="[Wajib] Judul: Sup Ayam Favorit" required>
+            <div class="user-row">
+                <img class="avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Vincent Simbolon">
+                <span class="username">Vincent Simbolon</span>
+                <span class="user-handle">@vincentjcas</span>
             </div>
-            <div class="form-section">
-                <input class="title-input" type="text" placeholder="[Wajib] Judul: Sup Ayam Favorit" required>
-                <div class="user-row">
-                    <img class="avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Vincent Simbolon">
-                    <span class="username">Vincent Simbolon</span>
-                    <span class="user-handle">@vincentjcas</span>
+            <textarea class="story-textarea" name="deskripsi"
+            placeholder="[Opsional] Cerita di balik masakan ini. Apa atau siapa yang menginspirasimu? Apa yang membuatnya istimewa? Bagaimana caramu menikmatinya? Gunakan @ untuk menandai pengguna lain."></textarea>
+            <div class="section-row">
+                <div class="section-col">
+                    <div class="section-title">Bahan-bahan</div>
+                    <textarea class="textarea-section" placeholder="
+                    2 buah wortel" name="bahan" required></textarea>
                 </div>
-                <textarea class="story-textarea"
-                    placeholder="[Opsional] Cerita di balik masakan ini. Apa atau siapa yang menginspirasimu? Apa yang membuatnya istimewa? Bagaimana caramu menikmatinya? Gunakan @ untuk menandai pengguna lain."></textarea>
-                <div class="section-row">
-                    <div class="section-col">
-                        <div class="section-title">Bahan-bahan</div>
-                        <div class="label-row">
-                            <span class="label">Porsi</span>
-                            <input class="input-small" type="text" placeholder="2 orang" required>
-                        </div>
-                        <textarea class="textarea-section" placeholder="1/2 ekor ayam
-2 buah wortel" required></textarea>
+                <div class="section-col">
+                    <div class="section-title">Langkah</div>
+                    <div class="label-row">
+                        <span class="label">Lama memasak</span>
+                        <input class="input-small" name="waktu_pembuatan" type="text" placeholder="1 jam 30 menit" required>
                     </div>
-                    <div class="section-col">
-                        <div class="section-title">Langkah</div>
-                        <div class="label-row">
-                            <span class="label">Lama memasak</span>
-                            <input class="input-small" type="text" placeholder="1 jam 30 menit" required>
-                        </div>
-                        <textarea class="textarea-section"
-                            placeholder="1. Potong ayam menjadi beberapa bagian, sisihkan." required></textarea>
-                    </div>
+                    <textarea class="textarea-section" name="langkah"
+                    placeholder="1. Potong ayam menjadi beberapa bagian, sisihkan." required></textarea>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</form>
 </body>
 
 </html>
+
+<script>
+function previewImage(event) {
+    const input = event.target;
+    const preview = document.getElementById('preview');
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
