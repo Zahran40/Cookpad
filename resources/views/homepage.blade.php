@@ -18,42 +18,10 @@
 
 
     <!-- Navbar -->
-    <nav class="navbar navbar-light bg-white border-bottom px-4 py-2">
-        <div class="d-flex align-items-center">
-
-        </div>
-        <div>
-            <a href="{{ route('login') }}">
-                <button class="btn btn-outline-secondary me-3"
-                    style="font-size: 25px; font-weight: 500; font-family: Montserrat;">Masuk</button>
-            </a>
-            <a href="{{ route('tulis') }}"><button class="btn-oren"><img
-                        src="https://cdn-icons-png.flaticon.com/512/1024/1024824.png" alt=""
-                        style="width: 35px; margin-right: 10px;">Tulis</button></a>
-        </div>
-    </nav>
+   {{-- filepath: c:\laragon\www\Cookpad\resources\views\homepage.blade.php --}}
+@include('Navbar.navbar')
     <!-- Sidebar -->
-    <div class="sidebar" id="mySidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
-            style="font-family: Montserrat;font-size: 30px;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Cookpad_logo.svg/2560px-Cookpad_logo.svg.png"
-                alt="" style="width: 140px;">
-            <img src="https://static.thenounproject.com/png/943458-200.png" alt="" style="width: 35px;"
-                class="hover-image">
-        </a>
-        <a href="#cari">🔎 Cari</a>
-        <a href="#kategori">Kategori</a>
-        <a href="{{ route('myresep') }}">Resepmu</a>
-        <a href="{{ route('koleksi') }}">Koleksi</a>
-    </div>
-
-    <!-- Tombol untuk membuka sidebar -->
-    <span class="open-btn" onclick="openNav()">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Cookpad_logo.svg/2560px-Cookpad_logo.svg.png"
-            alt="" style="width: 120px;">
-        <img src="https://cdn0.iconfinder.com/data/icons/large-black-icons/512/Shift_navigator_stock_up_right.png"
-            style="width: 25x; margin-left: 15px;" alt="" class="hover-image">
-    </span>
+    @include('Navbar.sidebar')
 
 
     <!-- Search Bar -->
@@ -64,11 +32,12 @@
         </div>
     </div>
     <div class="container my-4">
-        <form class="d-flex justify-content-center" style="max-width: 500px; margin: 0 auto;">
-            <input type="text" class="form-control me-2" placeholder=" 🔍 Cari resep, bahan, pengguna"
-                style="font-size: 20px; padding: 8px 12px; border: 1.5px solid #ccc; border-radius: 5px;">
-            <button class="btn-oren" style="padding: 10px 20px; font-size: 20px;">Cari</button>
-        </form>
+        <form class="d-flex" style="margin: 0 auto;" action="{{ route('search') }}" method="GET">
+    <input type="text" class="form-control me-2 mt-4" name="keyword" placeholder=" 🔍 Cari resep, bahan, pengguna"
+        style="font-size: 20px; padding: 8px 12px; border: 1.5px solid #ccc; border-radius: 5px;"
+        value="{{ request('keyword') }}">
+    <button class="btn-oren mt-4" style="font-size: 20px;">Cari</button>
+</form>
     </div>
 
 
@@ -82,336 +51,147 @@
     </div>
 
     <!-- Populer -->
-    <div class="container mb-5">
-        <h4 class="mb-3">Pencarian Populer</h4>
-        <div class="row g-3">
-            <!-- Card 1 -->
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/d0f1b6799e1c9f58/280x96cq50/photo.webp"
-                        class="card-img-top" alt="Resep 1">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text" style="color: inherit; text-decoration: none;">Ayam kecap</a>
+    <!-- Pencarian Populer -->
+<div class="container mb-5">
+    <h4 class="mb-3">Resep Terbaru</h4>
+    <div id="populer-carousel" style="position: relative; min-height: 350px;">
+    @php
+        $chunks = $populer->chunk(8);
+    @endphp
+    @foreach($chunks as $i => $batch)
+        <div class="populer-batch"
+            style="position: absolute; top:0; left:0; width:100%; transition: opacity 1s; opacity: {{ $i === 0 ? '1' : '0' }}; z-index: {{ $i === 0 ? '2' : '1' }};">
+            <div class="row">
+                @foreach($batch as $resep)
+                    <div class="col-12 col-md-3 mb-4">
+                        <div class="card recipe-card h-100 shadow-sm">
+                            <img src="{{ $resep->gambar_resep ?? 'https://via.placeholder.com/280x96?text=No+Image' }}"
+                                class="card-img-top" alt="{{ $resep->nama_resep }}">
+                            <div class="card-body p-2">
+                                <a href="{{ route('resep.show', ['id' => $resep->id]) }}" class="card-text" style="color: inherit; text-decoration: none;">
+                                    {{ $resep->nama_resep }}
+                                </a>
+                            </div>
+                        </div>
                     </div>
-
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/6acb3abe623c7500/280x96cq50/photo.webp"
-                        class="card-img-top" alt="Resep 2">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text" style="color: inherit; text-decoration: none;">Sambal bawang</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/452e032976d4136c/280x96cq50/photo.webp"
-                        class="card-img-top" alt="Resep 3">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text" style="color: inherit; text-decoration: none;">Pepes tahu</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/e4e5df3aae004285/280x96cq50/photo.webp"
-                        class="card-img-top" alt="Resep 4">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text" style="color: inherit; text-decoration: none;">Cumi asam manis</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 5 -->
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/0d240827a5bd59f5/280x96cq50/photo.webp"
-                        class="card-img-top" alt="Resep 5">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text" style="color: inherit; text-decoration: none;">Nasi uduk magic
-                            com</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 6 -->
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/0a2dbfe5fd2acc7c/280x96cq50/photo.webp"
-                        class="card-img-top" alt="Resep 6">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text" style="color: inherit; text-decoration: none;">Tumis labu siam</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 7 -->
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/5882ef6d2225086a/280x96cq50/photo.webp"
-                        class="card-img-top" alt="Resep 7">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text" style="color: inherit; text-decoration: none;">Brownies kukus</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 8 -->
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/6e943672cc90821e/280x96cq50/photo.webp"
-                        class="card-img-top" alt="Resep 8">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text" style="color: inherit; text-decoration: none;">Dadar jagung</a>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
-    </div>
+    @endforeach
+</div>
+</div>
+
+    <!-- JavaScript untuk mengubah opacity dan z-index -->
 
 
-    <!-- Resep Populer -->
-    <div class="container mb-5">
-        <h4 class="mb-3">Resep Populer yang dibuat banyak orang saat ini</h4>
-        <div class="row g-3">
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/97b5c760376673cf/1134x400f0.5_0.5_1.0q50/photo.webp"
-                        class="card-img-top" alt="Abon Kulit Pisang">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text2" style="color: inherit; text-decoration: none;">Abon Ikan</a>
-                        <div class="d-flex align-items-center mt-2">
-                            <a href="../User/profile.html" class="card-text mb-0"
-                                style="font-size: 20px; color: inherit; text-decoration: none;">
-                                <img src="https://img-global.cpcdn.com/users/b0ba1b7293a3bb0e/108x108cq50/avatar.webp"
-                                    alt="Logo" width="100" class="me-2 rounded-circle">
-                                Bunda Desi
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/0629d5904af66a52/1134x400cq50/photo.webp"
-                        class="card-img-top" alt="Abon Ayam">
-                    <div class="card-body p-2">
-                        <a href="../User/profile.html" class="card-text2"
-                            style="color: inherit; text-decoration: none;">Abon Ayam</a>
-                        <div class="d-flex align-items-center mt-2">
-                            <a href="../User/profile.html" class="card-text mb-0"
-                                style="font-size: 20px; color: inherit; text-decoration: none;">
-                                <img src="https://img-global.cpcdn.com/users/b0ba1b7293a3bb0e/108x108cq50/avatar.webp"
-                                    alt="Logo" width="100" class="me-2 rounded-circle">
-                                Bunda Desi
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/b69712e5f357c88f/1134x400cq50/photo.webp"
-                        class="card-img-top" alt="Abon Ikan">
-                    <div class="card-body p-2">
-                        <a href="../User/profile.html" class="card-text2"
-                            style="color: inherit; text-decoration: none;">Abon Kulit Pisang</a>
-                        <div class="d-flex align-items-center mt-2">
-                            <a href="../User/profile.html" class="card-text mb-0"
-                                style="font-size: 20px; color: inherit; text-decoration: none;">
-                                <img src="https://img-global.cpcdn.com/users/b0ba1b7293a3bb0e/108x108cq50/avatar.webp"
-                                    alt="Logo" width="100" class="me-2 rounded-circle">
-                                Bunda Desi
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/9e575970e9dd8593/1134x400f0.5_0.5_1.0q50/photo.webp"
-                        class="card-img-top" alt="Abon Sapi">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text2" style="color: inherit; text-decoration: none;">Cireng isi</a>
-                        <div class="d-flex align-items-center mt-2">
-                            <a href="../User/profile.html" class="card-text mb-0"
-                                style="font-size: 20px; color: inherit; text-decoration: none;">
-                                <img src="https://img-global.cpcdn.com/users/b0ba1b7293a3bb0e/108x108cq50/avatar.webp"
-                                    alt="Logo" width="100" class="me-2 rounded-circle">
-                                Bunda Desi
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const batches = document.querySelectorAll('.populer-batch');
+    let idx = 0;
+    setInterval(() => {
+        if (batches.length < 2) return;
+        // Fade out current batch
+        batches[idx].style.opacity = 0;
+        batches[idx].style.zIndex = 1;
+        // Setelah animasi fade out selesai (1 detik), tampilkan batch berikutnya
+        setTimeout(() => {
+            batches[idx].style.display = 'none';
+            idx = (idx + 1) % batches.length;
+            batches[idx].style.display = 'block';
+            batches[idx].style.opacity = 1;
+            batches[idx].style.zIndex = 2;
+        }, 1000);
+    }, 5000);
 
-    <!-- Lihat apa yang sedang dimasak -->
-    <div class="container mb-5">
-        <h4 class="mb-3">Lihat apa yang sedang dimasak orang-orang!</h4>
-        <h5 class="mb-3">bubur sumsum</h5>
-        <div class="row g-3">
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/840c9e058f13ae28/1134x400cq50/photo.webp"
-                        class="card-img-top" alt="Abon Kulit Pisang">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text2" style="color: inherit; text-decoration: none;">bubur sumsum super
-                            lembut</a>
-                        <div class="d-flex align-items-center mt-2">
-                            <a href="../User/profile.html" class="card-text mb-0"
-                                style="font-size: 20px; color: inherit; text-decoration: none;">
-                                <img src="https://img-global.cpcdn.com/users/8135b4c1bcf9afa5/216x216cq50/avatar.webp"
-                                    alt="Logo" width="100" class="me-2 rounded-circle">
-                                ayu lestari
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/48b86c4de6c5b03b/1134x400cq50/photo.webp"
-                        class="card-img-top" alt="Abon Ayam">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text2" style="color: inherit; text-decoration: none;">bubur sumsum kolak
-                            candil</a>
-                        <div class="d-flex align-items-center mt-2">
-                            <a href="../User/profile.html" class="card-text mb-0"
-                                style="font-size: 20px; color: inherit; text-decoration: none;">
-                                <img src="https://img-global.cpcdn.com/users/8135b4c1bcf9afa5/216x216cq50/avatar.webp"
-                                    alt="Logo" width="100" class="me-2 rounded-circle">
-                                ayu lestari
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/45c23eed0592cf51/1134x400cq50/photo.webp"
-                        class="card-img-top" alt="Abon Ikan">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text2" style="color: inherit; text-decoration: none;">bubur sumsum
-                            candil</a>
-                        <div class="d-flex align-items-center mt-2">
-                            <a href="../User/profile.html" class="card-text mb-0"
-                                style="font-size: 20px; color: inherit; text-decoration: none;">
-                                <img src="https://img-global.cpcdn.com/users/8135b4c1bcf9afa5/216x216cq50/avatar.webp"
-                                    alt="Logo" width="100" class="me-2 rounded-circle">
-                                ayu lestari
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/dac15bbb240576cd/1134x400cq50/photo.webp"
-                        class="card-img-top" alt="Abon Sapi">
-                    <div class="card-body p-2">
-                        <a href="../User/profile.html" class="card-text2"
-                            style="color: inherit; text-decoration: none;">Puding bunga telang</a>
-                        <div class="d-flex align-items-center mt-2">
-                            <a href="" class="card-text mb-0"
-                                style="font-size: 20px; color: inherit; text-decoration: none;">
-                                <img src="https://img-global.cpcdn.com/users/8135b4c1bcf9afa5/216x216cq50/avatar.webp"
-                                    alt="Logo" width="100" class="me-2 rounded-circle">
-                                ayu lestari
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    // Pastikan hanya batch pertama yang tampil di awal
+    batches.forEach((batch, i) => {
+        batch.style.display = (i === 0) ? 'block' : 'none';
+    });
+});
+</script>
 
-    <div class="container mb-5">
-        <h5 class="mb-3">garang asem ayam</h5>
-        <div class="row g-3">
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/f2dce3ed2f6fafaa/1134x400f0.500172_0.5_1.0q50/photo.webp"
-                        class="card-img-top" alt="Abon Kulit Pisang">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text2" style="color: inherit; text-decoration: none;">Garang asem bumbu
-                            iris</a>
+
+
+            
+
+
+   
+<!-- Resep Populer -->
+<div class="container mb-5">
+    <h4 class="mb-3">Rekomendasi buat kamu</h4>
+    <div class="row g-3">
+        @foreach($resepAcak as $resep)
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="card recipe-card h-100 shadow-sm" style="min-width: 180px; max-width: 260px; margin: 0 auto;">
+                    <img src="{{ $resep->gambar_resep ?? 'https://via.placeholder.com/180x120?text=No+Image' }}"
+                        class="card-img-top"
+                        alt="{{ $resep->nama_resep }}"6
+                        style="height:120px; width:100%; object-fit:cover;">
+                    <div class="card-body d-flex flex-column justify-content-between p-2" style="font-size: 1rem;">
+                        <a href="{{ route('resep.show', ['id' => $resep->id]) }}"
+                           class="card-title mb-2"
+                           style="color: #e67e22; font-weight: bold; font-size: 1.05rem; text-decoration: none;">
+                            {{ $resep->nama_resep }}
+                        </a>
                         <div class="d-flex align-items-center mt-2">
-                            <a href="../User/profile.html" class="card-text mb-0"
-                                style="font-size: 20px; color: inherit; text-decoration: none;">
-                                <img src="https://img-global.cpcdn.com/users/6ebe4ffa3913e4e6/80x80cq50/avatar.webp"
-                                    alt="Logo" width="100" class="me-2 rounded-circle">
-                                Bunda Zaza
-                            </a>
+                            <img src="{{ $resep->user && $resep->user->foto_profile ? $resep->user->foto_profile : 'https://ui-avatars.com/api/?name='.urlencode($resep->user->nama ?? 'User') }}"
+                                alt="Profile"
+                                width="90"
+                                height="40"
+                                class="me-2 rounded-circle border"
+                                style="object-fit:cover; aspect-ratio:1/1;">
+                            <span class="card-text mb-0" style="font-size: 1rem; color: #333;">
+                                {{ $resep->user->nama ?? '-' }}
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/c2e78125a2cfef2c/1134x400cq50/photo.webp"
-                        class="card-img-top" alt="Abon Ayam">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text2" style="color: inherit; text-decoration: none;">Garang asem
-                            ayam</a>
-                        <div class="d-flex align-items-center mt-2">
-                            <a href="../User/profile.html" class="card-text mb-0"
-                                style="font-size: 20px; color: inherit; text-decoration: none;">
-                                <img src="https://img-global.cpcdn.com/users/6ebe4ffa3913e4e6/80x80cq50/avatar.webp"
-                                    alt="Logo" width="100" class="me-2 rounded-circle">
-                                Bunda Zaza
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/489d355dd77821b4/1134x400cq50/photo.webp"
-                        class="card-img-top" alt="Abon Ikan">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text2" style="color: inherit; text-decoration: none;">Garang Asem ayam
-                            Godog</a>
-                        <div class="d-flex align-items-center mt-2">
-                            <a href="../User/profile.html" class="card-text mb-0"
-                                style="font-size: 20px; color: inherit; text-decoration: none;">
-                                <img src="https://img-global.cpcdn.com/users/6ebe4ffa3913e4e6/80x80cq50/avatar.webp"
-                                    alt="Logo" width="100" class="me-2 rounded-circle">
-                                Bunda Zaza
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card recipe-card">
-                    <img src="https://img-global.cpcdn.com/recipes/8481e6bf975536f9/1134x400cq50/photo.webp"
-                        class="card-img-top" alt="Abon Sapi">
-                    <div class="card-body p-2">
-                        <a href="" class="card-text2" style="color: inherit; text-decoration: none;">Garang Asem
-                            Ayam</a>
-                        <div class="d-flex align-items-center mt-2">
-                            <a href="../User/profile.html" class="card-text mb-0"
-                                style="font-size: 20px; color: inherit; text-decoration: none;">
-                                <img src="https://img-global.cpcdn.com/users/6ebe4ffa3913e4e6/80x80cq50/avatar.webp"
-                                    alt="Logo" width="100" class="me-2 rounded-circle">
-                                Bunda Zaza
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
+</div>
+</div>
+
+<!-- Lihat apa yang sedang dimasak -->
+<div class="container mb-5">
+    <h4 class="mb-3">Lihat apa yang sedang dimasak orang-orang!</h4>
+    <h5 class="mb-3">Sate</h5>
+    <div class="row g-4">
+        @forelse($resepSate as $resep)
+            <div class="col-12 col-sm-6 col-md-3 d-flex">
+                <div class="card recipe-card shadow h-100 w-100" style="min-width: 200px; max-width: 260px; margin: 0 auto; display: flex; flex-direction: column;">
+                    <img src="{{ $resep->gambar_resep ?? 'https://via.placeholder.com/260x130?text=No+Image' }}"
+                        class="card-img-top"
+                        alt="{{ $resep->nama_resep }}"
+                        style="height:130px; width:100%; object-fit:cover;">
+                    <div class="card-body p-2 d-flex flex-column justify-content-between" style="font-size: 1rem; flex:1;">
+                        <a href="{{ route('resep.show', $resep->id) }}" class="card-text2 mb-2" style="color: inherit; text-decoration: none; font-weight: 600;">
+                            {{ $resep->nama_resep }}
+                        </a>
+                        <div class="d-flex align-items-center mt-auto">
+                            <img src="{{ $resep->user && $resep->user->foto_profile ? $resep->user->foto_profile : 'https://ui-avatars.com/api/?name='.urlencode($resep->user->nama ?? 'User') }}"
+                                alt="Profile"
+                                width="90"
+                                height="38"
+                                class="me-2 rounded-circle border"
+                                style="object-fit:cover; aspect-ratio:1/1;">
+                            <span class="card-text mb-0" style="font-size: 1rem; color: #333;">
+                                {{ $resep->user->nama ?? '-' }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="col-12">
+                <div class="alert alert-warning">Belum ada resep sate yang dimasak.</div>
+            </div>
+        @endforelse
+    </div>
+</div>
+</div>
+
+    
 
     <section id="kategori">
         <div class="container mb-5" style="padding-top: 15px;">

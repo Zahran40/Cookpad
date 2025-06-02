@@ -24,45 +24,64 @@
     <!-- Search Bar -->
     <div class="container">
         <div class="mb-4">
-            <form class="d-flex" style="margin: 0 auto;">
-                <input type="text" class="form-control me-2 mt-4" placeholder=" 🔍 Cari resep, bahan, pengguna"
-                    style="font-size: 20px; padding: 8px 12px; border: 1.5px solid #ccc; border-radius: 5px;">
-
-                <button class="btn-oren mt-4" style="font-size: 20px;">Cari</button>
-            </form>
+            <form class="d-flex" style="margin: 0 auto;" action="{{ route('search') }}" method="GET">
+    <input type="text" class="form-control me-2 mt-4" name="keyword" placeholder=" 🔍 Cari resep, bahan, pengguna"
+        style="font-size: 20px; padding: 8px 12px; border: 1.5px solid #ccc; border-radius: 5px;"
+        value="{{ request('keyword') }}">
+    <button class="btn-oren mt-4" style="font-size: 20px;">Cari</button>
+</form>
         </div>
         <div class="mb-4">
-            <div>
-                <h4 class="mt-4">Resep Ayam <span class="text-muted">(90)</span></h4>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <button class="btn btn-link" style="color: inherit;">Terbaru</button>
+                </div>
             </div>
-        </div>
+            <div>
+    <h4 class="mt-4">
+        Hasil pencarian: 
+        <span class="text-primary">
+            {{ request('keyword') ? e(request('keyword')) : 'Semua Resep' }}
+        </span>
+        <span class="text-muted">({{ $reseps->count() }})</span>
+    </h4>
+</div>
 
-              @foreach ($reseps as $resep)
-    <div class="row">
-        <div class="col-12 mb-4">
-            <div class="card">
-                <div class="d-flex" style="height: 150px;">
-                    <img src="{{ $resep->gambar_resep }}"
-                         class="img-fluid"
-                         style="max-width: 150px; object-fit: cover;"
-                         alt="{{ $resep->nama_resep }}">
-                    <div class="card-body d-flex flex-column justify-content-between" style="height: 100%;">
-                        <a href="{{ route('resep.show', $resep->id) }}" class="card-text"
-                           style="color: inherit; text-decoration: none; font-weight: bold;">
-                            {{ $resep->nama_resep }}
-                        </a>
-                        <p class="card-texts" style="flex-grow: 1; overflow: hidden; text-overflow: ellipsis;">
-                            {{ $resep->bahan }}
-                        </p>
-                        <p class="text-muted mb-0">
-                            {{ $resep->waktu_pembuatan ?? 'Tidak disebutkan' }}
-                        </p>
+
+           @if($reseps->count() > 0)
+    @foreach ($reseps as $resep)
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card">
+                    <div class="d-flex" style="height: 150px;">
+                        <img src="{{ $resep->gambar_resep }}"
+                             class="img-fluid"
+                             style="max-width: 150px; object-fit: cover;"
+                             alt="{{ $resep->nama_resep }}">
+                        <div class="card-body d-flex flex-column justify-content-between" style="height: 100%;">
+                            <a href="{{ route('resep.show', $resep->id) }}" class="card-text"
+                               style="color: inherit; text-decoration: none; font-weight: bold;">
+                                {{ $resep->nama_resep }}
+                            </a>
+                            <p class="card-texts" style="flex-grow: 3; overflow: hidden; text-overflow: ellipsis;">
+                                {{ $resep->bahan }}
+                            </p>
+                            <p class="text-muted mb-0">
+                                {{ $resep->waktu_pembuatan ?? 'Tidak disebutkan' }}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    @endforeach
+@else
+    <div class="alert alert-warning mt-4" role="alert">
+        Resep tidak tersedia.
     </div>
-@endforeach
+@endif
+
+
         <div class="container my-4 mt-5">
             <div class="d-flex mt-2">
                 <h5>Tentang Kami</h5>

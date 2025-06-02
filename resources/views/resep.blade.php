@@ -17,65 +17,47 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-light bg-white border-bottom px-4 py-2">
-        <div class="d-flex align-items-center">
-
-        </div>
-        <div>
-            <a href="{{ route('login') }}">
-                <button class="btn btn-outline-secondary me-3"
-                    style="font-size: 25px; font-weight: 500; font-family: Montserrat;">Masuk</button>
-            </a>
-            <a href="{{ route('tulis') }}">
-                <button class="btn-oren"><img src="https://cdn-icons-png.flaticon.com/512/1024/1024824.png" alt=""
-                        style="width: 35px; margin-right: 10px;">Tulis</button>
-        </div>
-    </nav>
+    @include('Navbar.navbar')
 
     <!-- Sidebar -->
-    <div class="sidebar" id="mySidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
-            style="font-family: Montserrat;font-size: 30px;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Cookpad_logo.svg/2560px-Cookpad_logo.svg.png"
-                alt="" style="width: 140px;">
-            <img src="https://static.thenounproject.com/png/943458-200.png" alt="" style="width: 35px;"
-                class="hover-image">
-        </a>
-        <a href="{{ route('homepage') }}#cari">🔎 Cari</a>
-        <a href="{{ route('homepage') }}#kategori">Kategori</a>
-        <a href="{{ route('myresep') }}">Resepmu</a>
-        <a href="{{ route('koleksi') }}">Koleksi</a>
-    </div>
-    <!-- Tombol untuk membuka sidebar -->
-    <span class="open-btn" onclick="openNav()">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Cookpad_logo.svg/2560px-Cookpad_logo.svg.png"
-            alt="" style="width: 120px;">
-        <img src="https://cdn0.iconfinder.com/data/icons/large-black-icons/512/Shift_navigator_stock_up_right.png"
-            style="width: 25x; margin-left: 15px;" alt="" class="hover-image">
-    </span>
+    @include('Navbar.sidebar')
     
-    <div class="container mt-5">
-        <div class="row">
-                
-            <div class="col-md-2">
-                <img src="{{$resep->gambar_resep}}"
-                alt="{{$resep->nama_resep}}" class="recipe-image" style=" width: 320px; margin-left: 30px;">
-            </div>
-            <div class="col-md-6">
-                <div class="mt-5" style="margin-left: 180px;">
-                    
-                    <h2>{{ $resep->nama_resep }}</h2>
-                    <p><strong>{{ $resep->deskripsi }}</strong></p>
-                    <p>{{$resep->waktu_membuat}}</p>
-                </div>
-                <button class="btn btn-outline-warning" style="margin-left: 180px;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/6365/6365625.png" alt=""
-                    style="width: 30px; margin-right: 5px;">
-                    Simpan Resep
-                </button>
-                
-            </div>
+    <!-- filepath: c:\laragon\www\Cookpad\resources\views\resep.blade.php -->
+<div class="container mt-5">
+    <div class="row">
+        <!-- Kolom kiri: Gambar -->
+        <div class="col-md-4 d-flex align-items-start justify-content-center">
+            <img src="{{ $resep->gambar_resep }}"
+                alt="{{ $resep->nama_resep }}" class="recipe-image"
+                style="width: 320px; max-width:100%; border-radius:10px;">
         </div>
+        <!-- Kolom kanan: Info resep -->
+        <div class="col-md-8">
+            <div class="d-flex align-items-center mb-2">
+                <h2 class="mb-0">{{ $resep->nama_resep }}</h2>
+                @if(Auth::check())
+                    @if($sudahDisimpan)
+                        <button class="btn btn-success ms-3" disabled>
+                            <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="" style="width: 20px; margin-right: 5px;">
+                            Sudah di Simpan
+                        </button>
+                    @else
+                        <form action="{{ route('simpan-koleksi', $resep->id) }}" method="POST" style="display:inline;" class="ms-3">
+                            @csrf
+                            <button class="btn btn-outline-warning">
+                                <img src="https://cdn-icons-png.flaticon.com/512/6365/6365625.png" alt="" style="width: 20px; margin-right: 5px;">
+                                Simpan ke Koleksi Saya
+                            </button>
+                        </form>
+                    @endif
+                @endif
+            </div>
+            <p class="mb-3" style="font-size:1.1rem; color:#555;">
+                {{ $resep->deskripsi ?? '-' }}
+            </p>
+        </div>
+    </div>
+    <!-- ...lanjutan kode bahan dan langkah... -->
         
         <div class="row mt-4" style="margin-left: 25px;">
             <!-- Kolom kiri: Bahan-bahan -->
@@ -101,17 +83,20 @@
     </div>
 </div>
 
+
 <div class="container comment-box">
     <h2 class="mt-5">Ditulis Oleh</h2>
-            <div class="d-flex align-items-center mt-4">
-                
-                <img src="https://img-global.cpcdn.com/users/f1c058aed77568f4/196x196cq50/avatar.webp" alt="Avatar"
-                class="rounded-circle mb-4" style="width: 120px; height: auto; margin-right: 15px;">
-                <div class="ml-3">
-                    <h4>{{$resep->nama_pembuat}}</h4>
-                    {{-- <h6>{{$resep->created_at->format('d/m/')}}</h6> --}}
-                </div>
-            </div>
+    <div class="d-flex align-items-center mt-4">
+        <img src="{{ $pembuat->foto_profile ?? 'https://ui-avatars.com/api/?name='.urlencode($pembuat->nama) }}"
+            alt="Avatar"
+            class="rounded-circle mb-4"
+            style="width: 120px; height: auto; margin-right: 15px;">
+        <div class="ml-3">
+            <h4>{{ $pembuat->nama }}</h4>
+            <p class="mb-0">{{ $pembuat->email }}</p>
+        </div>
+    </div>
+</div>
         </div>
         
         <div class="container my-4 mt-5">

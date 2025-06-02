@@ -4,14 +4,15 @@ use App\Http\Controllers\inputResep;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ResepController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\KoleksiResepController;
 
 Route::get('/', function () {
     return view('homepage');
 })->name('homepage');
 
 
-Route::get('/sign-up', [PageController::class, 'signup'])->name('signup');
-Route::get('/login', [PageController::class, 'login'])->name('login');
+
 Route::get('/myresep', [PageController::class, 'myresep'])->name('myresep');
 Route::get('/profile', [PageController::class, 'profile'])->name('profile');
 Route::get('/koleksi', [PageController::class, 'koleksi'])->name('koleksi');
@@ -39,3 +40,42 @@ Route::get('/kentang', [ResepController::class, 'kentang'])->name('kentang');
 Route::get('/daging', [ResepController::class, 'daging'])->name('daging');
 Route::get('/mie', [ResepController::class, 'mie'])->name('mie');
 Route::post('/tulis', [inputResep::class, 'store'])->name('resep.store');
+
+
+//Route Login dan SignUp
+
+
+
+Route::get('/login', [UserController::class, 'showLogin'])->name('showlogin');
+Route::post('/login', [UserController::class, 'login'])->name('login');
+
+
+
+Route::get('/register', [UserController::class, 'showRegister'])->name('showregister');
+Route::post('/register', [UserController::class, 'register'])->name('register');
+
+// Route Log Out
+
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
+// Route Seaarch
+
+
+Route::get('/search', [ResepController::class, 'search'])->name('search');
+
+// Route resep populer 
+
+
+Route::get('/', [PageController::class, 'populer'])->name('homepage');
+
+// Route Koleksi Resep
+
+
+
+
+
+// Route untuk menyimpan resep ke koleksi (POST)
+Route::post('/koleksi/{id}', [KoleksiResepController::class, 'simpan'])->name('simpan-koleksi');
+Route::get('/koleksi', [KoleksiResepController::class, 'koleksiSaya'])->middleware('auth')->name('koleksi');
+
+Route::delete('/koleksi/{id}', [\App\Http\Controllers\KoleksiResepController::class, 'hapus'])->name('hapus-koleksi');

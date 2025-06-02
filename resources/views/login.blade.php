@@ -141,14 +141,14 @@
             <div class="logo-text" style="color:#6b2d00;font-family:Montserrat;font-weight:700;">cookpad</div>
         </div>
         <div class="login-title">Masuk ke Akun Anda</div>
-        <form class="login-form" method="POST" action="#">
+        <form class="login-form" method="POST" action="{{ route('login') }}">
             @csrf
             <input type="text" name="name" placeholder="Nama Pengguna" required> <input type="password" name="password"
                 placeholder="Password" required>
             <button type="submit" class="login-btn">Masuk</button>
         </form>
         <div class="register-link">
-            Belum punya akun? <a href="{{ route('signup') }}">Daftar sekarang</a> </div>
+            Belum punya akun? <a href="{{ route('showregister') }}">Daftar sekarang</a> </div>
         <div class="login-footer">
             Dengan masuk ke Cookpad, kamu menyetujui <a href="#">Ketentuan Pemakaian</a> &amp; <a href="#">Kebijakan
                 Privasi</a> kami

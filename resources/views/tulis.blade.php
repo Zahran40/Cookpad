@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+@php use Illuminate\Support\Str; @endphp
+ <!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -230,6 +231,8 @@
 </head>
 
 <body>
+@include('Navbar.navbar')
+
     <form id="upload-form" action=" {{route ('resep.store')}}" method="POST" enctype="multipart/form-data">
     <div class="container">
         <div class="header">
@@ -252,11 +255,11 @@
         </div>
         <div class="form-section">
             <input class="title-input" type="text" name="nama_resep" placeholder="[Wajib] Judul: Sup Ayam Favorit" required>
-            <div class="user-row">
-                <img class="avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Vincent Simbolon">
-                <span class="username">Vincent Simbolon</span>
-                <span class="user-handle">@vincentjcas</span>
-            </div>
+             <div class="user-row">
+         <img class="avatar" src="{{ $user->foto_profile ?? 'https://ui-avatars.com/api/?name='.urlencode($user->nama) }}" alt="{{ $user->nama }}">
+         <span class="username">{{ $user->nama }}</span>
+         <span class="user-handle">{{ '@'.Str::slug($user->nama) }}</span>
+             </div>
             <textarea class="story-textarea" name="deskripsi"
             placeholder="[Opsional] Cerita di balik masakan ini. Apa atau siapa yang menginspirasimu? Apa yang membuatnya istimewa? Bagaimana caramu menikmatinya? Gunakan @ untuk menandai pengguna lain."></textarea>
             <div class="section-row">
