@@ -42,7 +42,6 @@
                     <a href="{{ route('resep.show', $resep->id) }}">
                         <img src="{{ $resep->gambar_resep ?? 'https://via.placeholder.com/130x160?text=No+Image' }}"
                             class="card-img-top" alt="{{ $resep->nama_resep }}">
-                            style="width:130px; height:160px; object-fit:cover; border-radius:8px;
                     </a>
                     <div class="card-body">
                         <a href="{{ route('resep.show', $resep->id) }}" style="text-decoration:none;color:inherit;">
