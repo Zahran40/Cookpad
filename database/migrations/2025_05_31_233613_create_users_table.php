@@ -17,9 +17,17 @@ class CreateUsersTable extends Migration
             
         });
     }
+//     CREATE TABLE users (
+//     id_pembuat BIGINT AUTO_INCREMENT PRIMARY KEY,
+//     nama VARCHAR(255) NOT NULL,
+//     email VARCHAR(255) NOT NULL UNIQUE,
+//     password VARCHAR(255) NOT NULL,
+//     role VARCHAR(255) NOT NULL DEFAULT 'user'
+// );
 
     public function down()
     {
         Schema::dropIfExists('users');
     }
+    // DROP TABLE IF EXISTS users;
 }
