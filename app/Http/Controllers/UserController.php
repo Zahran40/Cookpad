@@ -22,29 +22,37 @@ public function login(Request $request)
         'name' => 'required|string',
         'password' => 'required|string',
     ]);
-    // select * from `users` where `nama` = ? limit 1
+
+    // Cari user berdasarkan nama
     $user = User::where('nama', $credentials['name'])->first();
 
     if ($user) {
         $hashed = $user->password;
-        // Cek apakah password sudah bcrypt (panjang 60 dan diawali $2y$ atau $2b$)
+        // Cek apakah password sudah bcrypt
         if ((strlen($hashed) === 60) && (substr($hashed, 0, 4) === '$2y$' || substr($hashed, 0, 4) === '$2b$')) {
             if (Hash::check($credentials['password'], $hashed)) {
                 Auth::login($user);
-                return redirect()->intended('/');
+            } else {
+                return back()->withErrors(['name' => 'Nama pengguna atau password salah.']);
             }
         } else {
             // Password masih plain text
             if ($credentials['password'] === $hashed) {
                 Auth::login($user);
-                return redirect()->intended('/');
+            } else {
+                return back()->withErrors(['name' => 'Nama pengguna atau password salah.']);
             }
+        }
+
+        // Redirect sesuai role
+        if ($user->role === 'admin') {
+            return redirect('/admin1');
+        } else {
+            return redirect('/');
         }
     }
 
-    return back()->withErrors([
-        'name' => 'Nama pengguna atau password salah.',
-    ]);
+    return back()->withErrors(['name' => 'Nama pengguna atau password salah.']);
 }
 
     
@@ -81,4 +89,10 @@ public function register(Request $request)
         Auth::logout();
         return redirect()->route('homepage')->with('success', 'Anda telah berhasil keluar.');
     }
+
+    
+    
+
+
+
 }

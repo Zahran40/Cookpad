@@ -17,4 +17,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+    public function getNameAttribute()
+    {
+        return $this->nama ?? '';
+    }
 }
