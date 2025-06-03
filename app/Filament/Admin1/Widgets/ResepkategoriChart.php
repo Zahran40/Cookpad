@@ -48,7 +48,7 @@ class ResepKategoriChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Jumlah Resep',
+                    'label' => 'Jumlah Resep per Kategori', 
                     'data' => $data,
                     'backgroundColor' => [
                         '#f59e42', '#fbbf24', '#f87171', '#34d399', '#60a5fa',

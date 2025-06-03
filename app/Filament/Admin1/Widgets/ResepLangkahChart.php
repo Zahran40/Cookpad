@@ -46,7 +46,7 @@ class ResepLangkahChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Jumlah Resep',
+                    'label' => 'Jumlah Langkah per Resep',
                     'data' => array_values($jumlahLangkah),
                     'backgroundColor' => '#38bdf8',
                 ],

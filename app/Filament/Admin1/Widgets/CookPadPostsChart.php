@@ -40,7 +40,7 @@ protected function getData(): array
     return [
         'datasets' => [
             [
-                'label' => 'Jumlah Resep',
+                'label' => 'Jumlah Waktu Pembuatan Resep',
                 'data' => [
                     $jumlah10,
                     $jumlah30,
