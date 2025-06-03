@@ -33,9 +33,7 @@
         </div>
         <div class="mb-4">
             <div class="d-flex justify-content-between">
-                <div>
-                    <button class="btn btn-link" style="color: inherit;">Terbaru</button>
-                </div>
+                
             </div>
             <div>
     <h4 class="mt-4">

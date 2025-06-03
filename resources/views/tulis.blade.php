@@ -201,6 +201,10 @@
             width: 110px;
         }
 
+        .swal2-border-radius {
+    border-radius: 12px !important;
+}
+
         .textarea-section {
             width: 100%;
             min-height: 120px;
@@ -228,10 +232,31 @@
             }
         }
     </style>
+    <!-- filepath: c:\laragon\www\Cookpad\resources\views\tulis.blade.php -->
+
+    <!-- ...css dan meta... -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- ...style... -->
+
 </head>
 
 <body>
 @include('Navbar.navbar')
+
+@if(session('kategori_error'))
+<script>
+    Swal.fire({
+        text: "{{ session('kategori_error') }}",
+        icon: 'warning',
+        background: '#fff',
+        color: '#ff9800',
+        confirmButtonColor: '#ff9800',
+        customClass: {
+            popup: 'swal2-border-radius'
+        }
+    });
+</script>
+@endif
 
     <form id="upload-form" action=" {{route ('resep.store')}}" method="POST" enctype="multipart/form-data">
     <div class="container">

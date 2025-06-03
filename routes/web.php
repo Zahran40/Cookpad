@@ -14,7 +14,12 @@ Route::get('/', function () {
 
 
 Route::get('/myresep', [PageController::class, 'myresep'])->name('myresep');
-Route::get('/profile', [PageController::class, 'profile'])->name('profile');
+ Route::get('/profile', [PageController::class, 'profile'])->name('profile');
+
+
+Route::get('/userprofile/{id}', [PageController::class, 'userprofile'])->name('userprofile');
+
+
 Route::get('/koleksi', [PageController::class, 'koleksi'])->name('koleksi');
 Route::get('/tulis', [PageController::class, 'tulis'])->name('tulis');
 // Route::get('/cumi', [PageController::class, 'cumi'])->name('cumi');
@@ -23,7 +28,8 @@ Route::get('/tulis', [PageController::class, 'tulis'])->name('tulis');
 // Route::get('/kentang', [PageController::class, 'kentang'])->name('kentang');
 // Route::get('/mie', [PageController::class, 'mie'])->name('mie');
 // Route::get('/sayur', [PageController::class, 'sayur'])->name('sayur');
-Route::get('/tahu', [PageController::class, 'tahu'])->name('tahu');
+
+Route::get('/tahu', [ResepController::class, 'tahu'])->name('tahu');
 // Route::get('/telur', [PageController::class, 'telur'])->name('telur');
 // Route::get('/udang', [PageController::class, 'udang'])->name('udang');
 

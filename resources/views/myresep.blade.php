@@ -25,11 +25,7 @@
 <div class="container mt-5">
     <h2>Resepmu ({{ $reseps->count() }})</h2>
     <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Cari di koleksi resep">
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button"
-                style="margin-left: 10px; font-size: 20px;">Cari</button>
-        </div>
+        
     </div>
 
     <div class="row g-1">

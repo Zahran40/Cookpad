@@ -21,13 +21,11 @@ class inputResep extends Controller
             'gambar_resep' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // Ganti baris ini:
-        // $validated['id_pembuat'] = 101;
-        // Menjadi:
         $validated['id_pembuat'] = Auth::user()->id_pembuat;
-
         $validated['status'] = 'pending';
         $nama = strtolower($validated['nama_resep']);
+
+        // Deteksi kategori otomatis
         if(str_contains($nama,'ayam')){
             $validated['id_kategori'] = 1;
         } elseif(str_contains($nama,'cumi')) {
@@ -51,7 +49,10 @@ class inputResep extends Controller
         } elseif(str_contains($nama,'tempe')) {
             $validated['id_kategori'] = 11;
         } else {
-            $validated['id_kategori'] = null;
+            // Jika tidak sesuai kriteria, redirect kembali dengan pesan error
+            return redirect()->back()
+                ->withInput()
+                ->with('kategori_error', 'Nama makanan tidak sesuai kriteria');
         }
 
         if ($request->hasFile('gambar_resep')) {
@@ -60,6 +61,32 @@ class inputResep extends Controller
             $file->move(public_path('gambar_resep'), $filename);
             $validated['gambar_resep'] = 'gambar_resep/' . $filename;
         }
+
+//         INSERT INTO resep (
+//     nama_resep,
+//     deskripsi,
+//     bahan,
+//     langkah,
+//     waktu_pembuatan,
+//     gambar_resep,
+//     id_pembuat,
+//     status,
+//     id_kategori,
+//     created_at,
+//     updated_at
+// ) VALUES (
+//     'NAMA_RESEP',
+//     'DESKRIPSI',
+//     'BAHAN',
+//     'LANGKAH',
+//     'WAKTU_PEMBUATAN',
+//     'GAMBAR_RESEP',
+//     ID_PEMBUAT,
+//     'pending',
+//     ID_KATEGORI,
+//     NOW(),
+//     NOW()
+// );
 
         Resep::create($validated);
 

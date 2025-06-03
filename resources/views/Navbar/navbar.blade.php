@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light bg-white border-bottom px-4 py-2">
+<nav class="navbar navbar-light bg-white border-bottom px-4 py-2 sticky-top">
     <button class="btn btn-outline-secondary me-3" style="font-size: 20px;"
     @if (Route::currentRouteName() == 'homepage') disabled @else onclick="window.history.back();" @endif>
     ← Kembali
@@ -29,7 +29,7 @@
                     <span style="font-size: 18px;">{{ Auth::user()->nama }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-                    <li><a class="dropdown-item" href="{{ route('profile') }}">Profil</a></li>
+                    <li><a class="dropdown-item" href="{{ route('profile', Auth::user()->id) }}">Profil</a></li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

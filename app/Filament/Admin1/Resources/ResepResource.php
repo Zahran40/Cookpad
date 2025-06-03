@@ -18,11 +18,13 @@ use Filament\Forms\Components\Select;
 class ResepResource extends Resource
 {
 
-     public static function getEloquentQuery(): Builder
-    {
-        // Hanya tampilkan resep dengan status 'pending'
-        return parent::getEloquentQuery()->where('status', 'pending');
-    }
+    //  public static function getEloquentQuery(): Builder
+    // {
+    //     // Hanya tampilkan resep dengan status 'pending'
+    //     // SELECT * from resep where status = 'pending';
+
+    //     return parent::getEloquentQuery()->where('status', 'pending');
+    // }
     protected static ?string $model = Resep::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -40,26 +42,62 @@ class ResepResource extends Resource
                 ->options([
                     'pending' => 'Pending',
                     'approved' => 'Approved',
-                    'rejected' => 'Rejected',
+                    
                 ])
                 ->required(),
             // Tambahkan field lain sesuai kebutuhan
         ]);
     }
 
-    public static function table(Table $table): Table
-    {
-         return $table
+    
+
+
+public static function table(Table $table): Table
+{
+    return $table
         ->columns([
             Tables\Columns\TextColumn::make('nama_resep')->label('Nama Resep'),
             Tables\Columns\TextColumn::make('deskripsi')->limit(30),
             Tables\Columns\TextColumn::make('bahan')->limit(30),
             Tables\Columns\TextColumn::make('status')->badge(),
-            // Tambahkan kolom lain sesuai kebutuhan
+        ])
+        ->filters([
+
+//             SELECT
+//     id,
+//     nama_resep,
+//     deskripsi,
+//     bahan,
+//     langkah,
+//     waktu_pembuatan,
+//     status
+// FROM resep
+// WHERE status = 'pending' -- atau status = 'approved' jika filter diubah
+// ORDER BY id DESC;
+            
+            Tables\Filters\SelectFilter::make('status')
+                ->label('Status')
+                ->options([
+                    'pending' => 'Pending',
+                    'approved' => 'Approved',
+                    
+                ])
+                ->default('pending'),
         ])
         ->actions([
-            // Tables\Actions\EditAction::make(),
-            Tables\Actions\DeleteAction::make(), // untuk menolak/hapus
+
+//             SELECT
+//     id,
+//     nama_resep,
+//     deskripsi,
+//     bahan,
+//     langkah,
+//     waktu_pembuatan,
+//     status
+// FROM resep
+// ORDER BY id DESC;
+
+            Tables\Actions\DeleteAction::make(),
             Tables\Actions\Action::make('approve')
                 ->label('Approve')
                 ->color('success')
@@ -69,7 +107,7 @@ class ResepResource extends Resource
                     $record->save();
                 }),
         ]);
-    }
+}
 
     public static function getRelations(): array
     {

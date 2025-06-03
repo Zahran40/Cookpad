@@ -28,6 +28,19 @@ class ResepKategoriChart extends ChartWidget
         ];
 
         $data = [];
+        // SELECT
+//     SUM(LOWER(nama_resep) LIKE '%ayam%') AS Ayam,
+//     SUM(LOWER(nama_resep) LIKE '%cumi%') AS Cumi,
+//     SUM(LOWER(nama_resep) LIKE '%daging%') AS Daging,
+//     SUM(LOWER(nama_resep) LIKE '%kambing%') AS Kambing,
+//     SUM(LOWER(nama_resep) LIKE '%kentang%') AS Kentang,
+//     SUM(LOWER(nama_resep) LIKE '%mie%') AS Mie,
+//     SUM(LOWER(nama_resep) LIKE '%sayur%') AS Sayur,
+//     SUM(LOWER(nama_resep) LIKE '%tahu%') AS Tahu,
+//     SUM(LOWER(nama_resep) LIKE '%telur%') AS Telur,
+//     SUM(LOWER(nama_resep) LIKE '%udang%') AS Udang,
+//     SUM(LOWER(nama_resep) LIKE '%tempe%') AS Tempe
+// FROM resep;
         foreach ($kategori as $namaKategori) {
             $data[] = Resep::where('nama_resep', 'like', '%' . strtolower($namaKategori) . '%')->count();
         }

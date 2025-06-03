@@ -17,6 +17,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Admin1\Widgets\UserResepStatChart;
+use App\Filament\Admin1\Widgets\ResepLangkahChart;
 
 
 class Admin1PanelProvider extends PanelProvider
@@ -39,6 +41,8 @@ class Admin1PanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 \App\Filament\Admin1\Widgets\ResepBawangChart::class, // tambahkan ini
+                ResepLangkahChart::class, // tambahkan ini
+
                 
             //     Widgets\FilamentInfoWidget::class,
             ])
