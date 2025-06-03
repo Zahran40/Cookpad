@@ -82,7 +82,7 @@ class UserController extends Controller
         ]);
 
         Auth::login($user);
-        return redirect('/'); // redirect ke halaman utama setelah daftar
+        return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');// redirect ke halaman utama setelah daftar
     }
 
     public function logout()
