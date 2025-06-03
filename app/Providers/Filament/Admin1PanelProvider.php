@@ -26,7 +26,7 @@ class Admin1PanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->brandName(null)
+            ->brandName('CookPad Admin Panel')
             ->id('admin1')
             ->path('admin1')
             ->colors([
